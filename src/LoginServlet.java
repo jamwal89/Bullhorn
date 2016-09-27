@@ -1,15 +1,16 @@
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import validation.Userdetails;
+
+import customTools.DBUser;
+import model.Bhuser;
+
 
 /**
  * Servlet implementation class LoginServlet
@@ -39,32 +40,22 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nextURL;
-		validation.Userdetails ud =new validation.Userdetails();
-		
-		
-		
+		HttpSession session = request.getSession();
 		response.setContentType("text/html");
-		 String username=request.getParameter("username");
-		 String password=request.getParameter("password");
-		 ud.setUsername(username);
-		 ud.setPassword(password);
-		 
-	     // PrintWriter out = response.getWriter();
-	     
-	    
-	  	if(ud.isValidUser()){
-	  		HttpSession session = request.getSession();
-	    	session.setAttribute("user",ud) ;
+		String useremail=request.getParameter("username");
+		String userpassword=request.getParameter("password");
+		Bhuser user =null;
 
-	    	
-	    	 nextURL="/OutputDisplay.jsp";
-	    	
-	    	
+	    
+	  	if(DBUser.isValidUser(useremail, userpassword)){
+	  		
+	  		user = DBUser.getUserByEmail(useremail);
+	  		session.setAttribute("user", user);
+	  		nextURL ="/Home.jsp";
 	    	
 	    	}
 	    else{
 	    	
-	        
 	    	nextURL = "/LoginPage.html";
 	    }
 	  	response.sendRedirect(request.getContextPath() + nextURL);
