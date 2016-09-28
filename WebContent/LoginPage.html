@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="Style.css"> 
-<body>
+<script src="jquery-1.12.4.min.js"></script>
+<!-- BEGIN Bootstrap -->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<link href="styles/darkly.bootstrap.min.css" rel="stylesheet">
+<!-- END Bootstrap -->
+<body >
 
 
 
 <form action="LoginServlet" method="post">
 <h1>Welcome to BullHorn</h1>
- Username:<br>
+
+
+<br>
+<br>
+ Login:<br>
  <input type="text" name="username">
 <br>
 <br>
 
 Password:<br>
 <input type="password" name="password"> <br>
+
+
 <input type = "Submit" value ="Log In">
 <input type="reset" value="Reset"> <br>
 
@@ -21,8 +36,14 @@ Password:<br>
 
 </form>
 
+
 <p>Note that the form itself is not visible.</p>
 <p>Also note that the default width of a text input field is 20 characters.</p>
-
+  <div id="footer">
+      <div class="container">
+        <p class="text-muted"><span class="glyphicon glyphicon-volume-up" aria-hidden="true">&nbsp;Bullhorn&nbsp;&nbsp;&copy; 2016</span></p>
+       </div>
+   </div>
+   
 </body>
 </html>

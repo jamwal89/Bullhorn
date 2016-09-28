@@ -1,7 +1,7 @@
 
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,24 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import customTools.DBUser;
 import customTools.DbBhposts;
-import model.Bhuser;
 import model.Bhpost;
 
-
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class Home
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/HomeServlet")
+public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public HomeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,32 +39,26 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nextURL;
-	
-		
+		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
+		Date postdate = new Date();
 		response.setContentType("text/html");
-		String useremail=request.getParameter("username");
-		String userpassword=request.getParameter("password");
-		Bhuser user =null;
-	    
-	  	if(DBUser.isValidUser(useremail, userpassword)){
-	  		
-	  		user = DBUser.getUserByEmail(useremail);
-	  		session.setAttribute("user", user);
-	  		
-	  		List<Bhpost> posts=null;
-			posts=DbBhposts.postsofUser(useremail);
-			session.setAttribute("posts", posts);
-			
-	  		nextURL ="/Home.jsp";
-	    	
-	    	}
-	    else{
-	    	
-	    	nextURL = "/LoginPage.html";
-	    }
-	  	response.sendRedirect(request.getContextPath() + nextURL);
+		
+		model.Bhuser  user = (model.Bhuser) session.getAttribute("user");
+		//String username=user.getUsername();
+				
+				
+				
+		
+		String userpost=request.getParameter("posttext");
+		Bhpost bhPost= new Bhpost();
+		
+		bhPost.setBhuser(user);
+		bhPost.setPostdate(postdate);
+		bhPost.setPosttext(userpost);
+		System.out.println("BullHorn Insert");
+		DbBhposts.insert(bhPost);
+	
 	}
 
 }
