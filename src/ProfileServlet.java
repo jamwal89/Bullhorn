@@ -1,8 +1,6 @@
 
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,21 +10,20 @@ import javax.servlet.http.HttpSession;
 
 import customTools.DBUser;
 import customTools.DbBhposts;
-import model.Bhuser;
 import model.Bhpost;
-
+import model.Bhuser;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class ProfileServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/ProfileServlet")
+public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public ProfileServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,40 +33,38 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
+		
+		String nextURL="/Profile.jsp";
+		
+		response.sendRedirect(request.getContextPath() + nextURL);
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 */}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		String nextURL;
-	
+		String updatedname=request.getParameter("name");
+		String updatedemail=request.getParameter("email");
+		String updatedmotto=request.getParameter("motto");
+		String updatedpassword=request.getParameter("password");
+		
+		
 		
 		HttpSession session = request.getSession();
-		response.setContentType("text/html");
-		String useremail=request.getParameter("username");
-		String userpassword=request.getParameter("password");
-		Bhuser user =null;
-	    
-	  	if(DBUser.isValidUser(useremail, userpassword)){
-	  		
-	  		user = DBUser.getUserByEmail(useremail);
-	  		session.setAttribute("user", user);
-	  		
-	  		List<Bhpost> posts=null;
-			posts=DbBhposts.postsofUser(useremail);
-			
-			session.setAttribute("posts", posts);
-			
-	  		nextURL ="/Home.jsp";
-	    	
-	    	}
-	    else{
-	    	
-	    	nextURL = "/LoginPage.html";
-	    }
-	  	response.sendRedirect(request.getContextPath() + nextURL);
+		
+		Bhuser upadteduser= (Bhuser) session.getAttribute("user");
+		
+		upadteduser.setUsername(updatedname);
+		upadteduser.setUseremail(updatedemail);
+		upadteduser.setUserpassword(updatedpassword);
+		upadteduser.setMotto(updatedmotto);
+	
+		System.out.println("BullHorn User detail Update");
+		DBUser.update(upadteduser);
+		nextURL="/Profile.jsp";
+		response.sendRedirect(request.getContextPath() + nextURL);
+		
+		
 	}
 
 }

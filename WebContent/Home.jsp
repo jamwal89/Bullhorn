@@ -58,6 +58,19 @@ function validate(form) {
             <input type="reset" value="Clear"/>
         </div>  
     </form>     
+ <table class="table table-bordered">
+    <thead>
+        <tr><th>User</th><th>Post</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+    <c:forEach var="post" items="${posts}">
+        <tr><td><c:out value="${post.bhuser.useremail}"/></td>
+        <td><c:out value="${post.posttext}"/></td>
+        <td><fmt:formatDate value="${post.postdate}" pattern="yy-MMM-dd"/></td>
+        </tr>
+    </c:forEach>
+    </tbody>
+    </table>
 <jsp:include page="footer.jsp"></jsp:include>
 
 </body>

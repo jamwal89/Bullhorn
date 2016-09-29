@@ -13,3 +13,9 @@ p {
 input{
 	color :black
 }
+
+formItem label {
+    text-align:center;
+    line-height:150%;
+    font-size:.85em;
+}
