@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import customTools.DbBhposts;
 import model.Bhpost;
@@ -34,18 +35,12 @@ public class NewsfeedServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	//	response.getWriter().append("Served at: ").append(request.getContextPath());
 		String nextURL="/Newsfeed.jsp";
+		HttpSession session = request.getSession();
+		
+		List<Bhpost> allposts=DbBhposts.bhPost();
+		session.setAttribute("posts", allposts);
+		 
 		response.sendRedirect(request.getContextPath() + nextURL);
-		 System.out.println("Using Advanced for loop");
-		
-		
-		
-		List<Bhpost> allposts=null;
-		allposts=DbBhposts.searchPosts("a");
-
-		 System.out.println("Using Advanced for loop");
-	        for (Bhpost s : allposts) {
-	            System.out.println(allposts);
-	        }
 	
 	}
 
