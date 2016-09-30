@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import customTools.DBUser;
 import customTools.DbBhposts;
+import customTools.DbUtil;
 import model.Bhuser;
 import model.Bhpost;
 
@@ -61,6 +62,9 @@ public class LoginServlet extends HttpServlet {
 			posts=DbBhposts.postsofUser(useremail);
 			
 			session.setAttribute("posts", posts);
+			 int size = 30;
+             String gravatarURL = DbUtil.getGravatarURL(useremail, size);
+             session.setAttribute("gravatarURL", gravatarURL);
 			
 	  		nextURL ="/Home.jsp";
 	    	
